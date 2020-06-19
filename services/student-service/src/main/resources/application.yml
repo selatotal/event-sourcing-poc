@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:3306/student
+    username: root
+    password: admin12345
+  output:
+    ansi:
+      enabled: ALWAYS
