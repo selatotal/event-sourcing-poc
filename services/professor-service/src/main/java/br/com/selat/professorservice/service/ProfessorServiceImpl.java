@@ -11,7 +11,6 @@ import br.com.selat.professorservice.model.Professor;
 import br.com.selat.professorservice.repository.ProfessorRepository;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

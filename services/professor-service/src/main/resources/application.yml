@@ -15,4 +15,4 @@ spring:
 
 kafka:
   bootstrapAddress: localhost:9092
-  eventTopicName: events
+  eventTopicName: professor-events

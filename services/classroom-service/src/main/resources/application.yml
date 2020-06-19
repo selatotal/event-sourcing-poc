@@ -12,3 +12,9 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+
+kafka:
+  bootstrapAddress: localhost:9092
+  eventTopicName: classroom-events
+  consumerGroupId: classroom-service
+  listenEventTopics: professor-events,student-events
