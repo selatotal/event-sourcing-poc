@@ -1,12 +1,15 @@
 package br.com.selat.studentservice.service;
 
 import br.com.selat.studentservice.contract.v1.StudentService;
+import br.com.selat.studentservice.contract.v1.event.EventEntity;
+import br.com.selat.studentservice.contract.v1.event.EventType;
 import br.com.selat.studentservice.contract.v1.exception.NotFoundException;
 import br.com.selat.studentservice.contract.v1.exception.ServiceValidationException;
 import br.com.selat.studentservice.contract.v1.input.StudentInput;
 import br.com.selat.studentservice.contract.v1.output.StudentOutput;
 import br.com.selat.studentservice.model.Student;
 import br.com.selat.studentservice.repository.StudentRepository;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +23,15 @@ public class StudentServiceImpl implements StudentService {
 
     private static final String NOT_FOUND_MESSAGE = "Student not found";
     private static final int NAME_MAX_LENGTH = 255;
+    private final Gson gson = new Gson();
     private final StudentRepository studentRepository;
+    private final KafkaService kafkaService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository){
+    public StudentServiceImpl(StudentRepository studentRepository,
+                              KafkaService kafkaService){
         this.studentRepository = studentRepository;
+        this.kafkaService = kafkaService;
     }
 
     @Override
@@ -38,6 +45,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentOutput create(StudentInput input) {
         validateInput(input);
         Student student = studentRepository.save(new Student(UUID.randomUUID().toString(), input.getName()));
+        kafkaService.publishEvent(EventType.CREATE, EventEntity.Student, gson.toJson(student));
         return toStudentOutput(student);
     }
 
@@ -48,6 +56,7 @@ public class StudentServiceImpl implements StudentService {
         Student entity = studentRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
         entity.setName(input.getName());
         Student student = studentRepository.save(entity);
+        kafkaService.publishEvent(EventType.UPDATE, EventEntity.Student, gson.toJson(student));
         return toStudentOutput(student);
     }
 
@@ -55,6 +64,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void delete(String id) {
         Student entity = studentRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
+        kafkaService.publishEvent(EventType.DELETE, EventEntity.Student, gson.toJson(entity));
         studentRepository.delete(entity);
     }
 

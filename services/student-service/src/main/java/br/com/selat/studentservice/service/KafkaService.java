@@ -1,14 +1,12 @@
-package br.com.selat.classroomservice.service;
+package br.com.selat.studentservice.service;
 
-import br.com.selat.classroomservice.contract.v1.event.Event;
-import br.com.selat.classroomservice.contract.v1.event.EventEntity;
-import br.com.selat.classroomservice.contract.v1.event.EventType;
-import com.google.gson.Gson;
+import br.com.selat.studentservice.contract.v1.event.Event;
+import br.com.selat.studentservice.contract.v1.event.EventEntity;
+import br.com.selat.studentservice.contract.v1.event.EventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -45,11 +43,6 @@ public class KafkaService {
                 logger.info("Message sent to kafka");
             }
         });
-    }
-
-    @KafkaListener(topics = "#{'${kafka.listenEventTopics}'.split(',')}")
-    public void listenEventTopic(Event event){
-        logger.info("Message received: " + new Gson().toJson(event));
     }
 
 }
