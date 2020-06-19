@@ -140,3 +140,8 @@ gradle-app.setting
 **/build/
 infra/data
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij+iml,visualstudiocode,gradle
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/compiler.xml
+/.idea/jarRepositories.xml
+/.idea/codeStyles/Project.xml
+/.idea/vcs.xml
