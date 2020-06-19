@@ -12,3 +12,7 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+
+kafka:
+  bootstrapAddress: localhost:9092
+  eventTopicName: events
