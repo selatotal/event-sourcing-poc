@@ -4,5 +4,7 @@ public enum EventEntity {
     Professor,
     Student,
     Classroom,
-    Enrollment;
+    Course,
+    ProfessorEnrollment,
+    StudentEnrollment;
 }
