@@ -56,11 +56,7 @@ The message has the operation type (CREATE/UPDATE/DELETE), the entity type and t
 
 
 # TODO List
-- Test with one event topic
-- Test transactions failures (kafka failure, database failure)
-  - Salva no banco, erro ao publicar 
-  - Publico com sucesso, erro no banco 
-- Como lidar com eventos duplicados 
+- Como lidar com eventos duplicados
 - sequenciamento das msgs 
 - Exemplo de rewind logs. Aplicação le eventos historicos e repopula sua base. 
 - Monitoramento de msgs. Tratamento de erros. 

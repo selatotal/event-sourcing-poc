@@ -15,4 +15,6 @@ spring:
 
 kafka:
   bootstrapAddress: localhost:9092
+  publishTimeout: 1000
   eventTopicName: professor-events
+  transactionalId: professor-id

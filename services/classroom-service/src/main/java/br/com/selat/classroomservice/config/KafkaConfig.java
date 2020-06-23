@@ -16,6 +16,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Configuration
 @EnableKafka
@@ -27,12 +28,17 @@ public class KafkaConfig {
     @Value("${kafka.consumerGroupId}")
     private String kafkaConsumerGroupId;
 
+    @Value("${kafka.transactionalId}")
+    private String kafkaTransactionalId;
+
     @Bean
     public ProducerFactory<String, Event> producerFactory(){
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
+        configProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, kafkaTransactionalId + UUID.randomUUID().toString());
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
