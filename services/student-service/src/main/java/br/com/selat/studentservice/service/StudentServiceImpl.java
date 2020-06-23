@@ -44,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public StudentOutput create(StudentInput input) {
         validateInput(input);
-        Student student = studentRepository.save(new Student(UUID.randomUUID().toString(), input.getName()));
+        Student student = studentRepository.save(new Student(UUID.randomUUID().toString(), input.getName(), input.getEmail(), input.getRa()));
         kafkaService.publishEvent(EventType.CREATE, EventEntity.Student, gson.toJson(student));
         return toStudentOutput(student);
     }
@@ -78,9 +78,15 @@ public class StudentServiceImpl implements StudentService {
         if (input.getName().length() > NAME_MAX_LENGTH){
             throw new ServiceValidationException("Name too long");
         }
+        if (isBlank(input.getEmail())){
+            throw new ServiceValidationException("Invalid email");
+        }
+        if (isBlank(input.getRa())){
+            throw new ServiceValidationException("Invalid Ra");
+        }
     }
 
     private StudentOutput toStudentOutput(Student student){
-        return new StudentOutput(student.getId(), student.getName());
+        return new StudentOutput(student.getId(), student.getName(), student.getEmail(), student.getRa());
     }
 }

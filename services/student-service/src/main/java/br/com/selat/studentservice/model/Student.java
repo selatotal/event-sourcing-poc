@@ -9,13 +9,17 @@ public class Student {
     @Id
     private String id;
     private String name;
+    private String email;
+    private String ra;
 
     public Student() {
     }
 
-    public Student(String id, String name) {
+    public Student(String id, String name, String email, String ra) {
         this.id = id;
         this.name = name;
+        this.email = email;
+        this.ra = ra;
     }
 
     public String getId() {
@@ -32,5 +36,21 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRa() {
+        return ra;
+    }
+
+    public void setRa(String ra) {
+        this.ra = ra;
     }
 }

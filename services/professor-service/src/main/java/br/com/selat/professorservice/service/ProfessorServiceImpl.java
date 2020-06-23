@@ -44,7 +44,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Transactional
     public ProfessorOutput create(ProfessorInput input) {
         validateInput(input);
-        Professor professor = professorRepository.save(new Professor(UUID.randomUUID().toString(), input.getName()));
+        Professor professor = professorRepository.save(new Professor(UUID.randomUUID().toString(), input.getName(), input.getEmail()));
         kafkaService.publishEvent(EventType.CREATE, EventEntity.Professor, gson.toJson(professor));
         return toProfessorOutput(professor);
     }
@@ -81,6 +81,6 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     private ProfessorOutput toProfessorOutput(Professor professor){
-        return new ProfessorOutput(professor.getId(), professor.getName());
+        return new ProfessorOutput(professor.getId(), professor.getName(), professor.getEmail());
     }
 }

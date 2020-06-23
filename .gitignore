@@ -145,3 +145,4 @@ infra/data
 /.idea/jarRepositories.xml
 /.idea/codeStyles/Project.xml
 /.idea/vcs.xml
+/.idea/dataSources.xml
