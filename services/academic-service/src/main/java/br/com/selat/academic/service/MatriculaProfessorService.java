@@ -38,7 +38,7 @@ public class MatriculaProfessorService {
     @Transactional
     public MatriculaProfessor create(MatriculaProfessor input) {
         MatriculaProfessor aluno = matriculaProfessorRepository.save(input);
-        kafkaService.publishEvent(EventType.CREATE, EventEntity.ALUNO, gson.toJson(aluno));
+        kafkaService.publishEvent(EventType.CREATE, EventEntity.MATRICULA_PROFESSOR, gson.toJson(aluno));
         return aluno;
     }
 
@@ -48,7 +48,7 @@ public class MatriculaProfessorService {
         entity.setCodigoProfessor(input.getCodigoProfessor());
         entity.setTurmasDisciplina(input.getTurmasDisciplina());
         MatriculaProfessor aluno = matriculaProfessorRepository.save(entity);
-        kafkaService.publishEvent(EventType.UPDATE, EventEntity.ALUNO, gson.toJson(aluno));
+        kafkaService.publishEvent(EventType.UPDATE, EventEntity.MATRICULA_PROFESSOR, gson.toJson(aluno));
         return aluno;
     }
 
@@ -56,7 +56,7 @@ public class MatriculaProfessorService {
     public void delete(String id) {
         MatriculaProfessor entity = matriculaProfessorRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
         matriculaProfessorRepository.delete(entity);
-        kafkaService.publishEvent(EventType.DELETE, EventEntity.ALUNO, gson.toJson(entity));
+        kafkaService.publishEvent(EventType.DELETE, EventEntity.MATRICULA_PROFESSOR, gson.toJson(entity));
     }
 
 }

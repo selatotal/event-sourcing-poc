@@ -31,7 +31,7 @@ public class TurmaDisciplinaService {
     @Transactional
     public TurmaDisciplina create(TurmaDisciplina input) {
         TurmaDisciplina entity = turmaDisciplinaRepository.save(input);
-        kafkaService.publishEvent(EventType.CREATE, EventEntity.GRADE_DISCIPLINA, gson.toJson(entity));
+        kafkaService.publishEvent(EventType.CREATE, EventEntity.TURMA_DISCIPLINA, gson.toJson(entity));
         return entity;
     }
 
@@ -45,7 +45,7 @@ public class TurmaDisciplinaService {
         entity.setFim(input.getFim());
         entity.setProfessores(input.getProfessores());
         entity = turmaDisciplinaRepository.save(entity);
-        kafkaService.publishEvent(EventType.UPDATE, EventEntity.GRADE_DISCIPLINA, gson.toJson(entity));
+        kafkaService.publishEvent(EventType.UPDATE, EventEntity.TURMA_DISCIPLINA, gson.toJson(entity));
         return entity;
     }
 
@@ -53,7 +53,7 @@ public class TurmaDisciplinaService {
     public void delete(String id) {
         TurmaDisciplina entity = turmaDisciplinaRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
         turmaDisciplinaRepository.delete(entity);
-        kafkaService.publishEvent(EventType.DELETE, EventEntity.GRADE_DISCIPLINA, gson.toJson(entity));
+        kafkaService.publishEvent(EventType.DELETE, EventEntity.TURMA_DISCIPLINA, gson.toJson(entity));
     }
 
 }
