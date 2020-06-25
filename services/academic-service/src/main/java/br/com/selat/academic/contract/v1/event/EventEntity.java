@@ -6,5 +6,5 @@ public enum EventEntity {
     MATRICULA_ALUNO,
     MATRICULA_PROFESSOR,
     PROFESSOR,
-    TURMA_DISCIPLINA;
+    TURMA_DISCIPLINA
 }
