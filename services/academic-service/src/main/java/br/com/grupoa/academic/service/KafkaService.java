@@ -20,7 +20,6 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -72,11 +71,12 @@ public class KafkaService {
 
         public synchronized void publishEvent(String topicName, String key, T payload) {
             ListenableFuture<SendResult<String, T>> future = kafkaTemplate.send(topicName, key, payload);
-            future.addCallback(new ListenableFutureCallback<SendResult<String, T>>() {
+            future.addCallback(new ListenableFutureCallback<>() {
                 @Override
                 public void onSuccess(SendResult<String, T> result) {
                     logger.info("Message sent to kafka");
                 }
+
                 @Override
                 public void onFailure(Throwable ex) {
                     logger.error("Error sending message to kafka: ", ex);
