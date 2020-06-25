@@ -1,1 +1,0 @@
-alter table professor ADD email VARCHAR(255);

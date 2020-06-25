@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  output:
+    ansi:
+      enabled: ALWAYS
+
+redis:
+  hostName: localhost
+  port: 6379
+
+kafka:
+  bootstrapAddress: localhost:9092
+  publishTimeout: 1000
+  eventTopicName: academic-events
+  transactionalId: academic-id
