@@ -57,7 +57,7 @@ public class KafkaService {
 
     public synchronized void publishEvent(EventType eventType, EventEntity eventEntity, String entityKey, AcademicEntity payload) {
         Event event = new Event(eventType, eventEntity, gson.toJson(payload));
-        publishKafkaEvent.publishEvent(kafkaEventTopicName, UUID.randomUUID().toString(), event);
+        publishKafkaEvent.publishEvent(kafkaEventTopicName, entityKey, event);
 
         PublishKafka publishKafka = Optional.ofNullable(sendMap.get(eventEntity)).orElseThrow(() -> new ServiceValidationException("Invalid entity"));
         publishKafka.publishEvent(kafkaTableRootName + "_" + eventEntity.name(), entityKey, payload);

@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,8 @@ public class KafkaListenerService {
 
     @KafkaListener(topics = "#{'${kafka.listenEventTopics}'.split(',')}")
     @Transactional
-    public void listenEventTopic(Event event){
-        logger.info(format("Message received: %s", new Gson().toJson(event)));
+    public void listenEventTopic(Event event, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key){
+        logger.info(format("Message received: [%s] %s", key, new Gson().toJson(event)));
         switch (event.getEntity()){
             case ALUNO:
                 processAlunoEvent(event);
