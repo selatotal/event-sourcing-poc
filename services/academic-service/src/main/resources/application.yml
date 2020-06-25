@@ -18,3 +18,4 @@ kafka:
   publishTimeout: 1000
   eventTopicName: academic-events
   transactionalId: academic-id
+  tableRootName: TABLE

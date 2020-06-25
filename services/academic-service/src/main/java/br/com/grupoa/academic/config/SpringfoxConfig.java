@@ -1,4 +1,4 @@
-package br.com.grupoa.avaliaservice.config;
+package br.com.grupoa.academic.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ public class SpringfoxConfig {
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.grupoa.avaliaservice"))
+                .apis(RequestHandlerSelectors.basePackage("br.com.grupoa.academic"))
                 .paths(PathSelectors.any())
                 .build();
     }

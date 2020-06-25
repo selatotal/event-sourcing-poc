@@ -46,6 +46,19 @@ services:
     volumes:
       - 'redis_data:/bitnami/redis/data'
 
+  mysql:
+    image: mysql:8
+    container_name: mysql8
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin12345
+      MYSQL_PASSWORD: tales
+      MYSQL_USER: tales
+      MYSQL_DATABASE: tales
+
 volumes:
   redis_data:
     driver: local
