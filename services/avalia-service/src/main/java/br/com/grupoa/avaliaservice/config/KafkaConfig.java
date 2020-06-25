@@ -1,6 +1,6 @@
-package br.com.selat.classroomservice.config;
+package br.com.grupoa.avaliaservice.config;
 
-import br.com.selat.classroomservice.contract.v1.event.Event;
+import br.com.grupoa.avaliaservice.contract.v1.event.Event;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

@@ -1,4 +1,4 @@
-package br.com.selat.classroomservice.contract.v1.exception;
+package br.com.grupoa.avaliaservice.contract.v1.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,6 +1,6 @@
-package br.com.selat.classroomservice.endpoint.v1;
+package br.com.grupoa.avaliaservice.endpoint.v1;
 
-import br.com.selat.classroomservice.contract.v1.output.HealthOutput;
+import br.com.grupoa.avaliaservice.contract.v1.output.HealthOutput;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

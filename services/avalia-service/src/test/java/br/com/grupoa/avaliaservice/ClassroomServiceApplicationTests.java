@@ -1,4 +1,4 @@
-package br.com.selat.classroomservice;
+package br.com.grupoa.avaliaservice;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

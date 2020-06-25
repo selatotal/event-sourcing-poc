@@ -1,4 +1,4 @@
-package br.com.selat.classroomservice.contract.v1.event;
+package br.com.grupoa.avaliaservice.contract.v1.event;
 
 public enum EventType {
     CREATE,

@@ -1,13 +1,13 @@
-package br.com.selat.classroomservice;
+package br.com.grupoa.avaliaservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ClassroomServiceApplication {
+public class AvaliaServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ClassroomServiceApplication.class, args);
+		SpringApplication.run(AvaliaServiceApplication.class, args);
 	}
 
 }

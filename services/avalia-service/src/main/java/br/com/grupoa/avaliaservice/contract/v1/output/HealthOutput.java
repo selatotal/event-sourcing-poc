@@ -1,4 +1,4 @@
-package br.com.selat.classroomservice.contract.v1.output;
+package br.com.grupoa.avaliaservice.contract.v1.output;
 
 public class HealthOutput {
 

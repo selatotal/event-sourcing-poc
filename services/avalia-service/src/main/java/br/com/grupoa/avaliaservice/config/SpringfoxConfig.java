@@ -1,4 +1,4 @@
-package br.com.selat.classroomservice.config;
+package br.com.grupoa.avaliaservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
