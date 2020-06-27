@@ -70,6 +70,7 @@ public class KafkaService {
         }
 
         public synchronized void publishEvent(String topicName, String key, T payload) {
+            logger.info("Sending message to topic: " + topicName);
             ListenableFuture<SendResult<String, T>> future = kafkaTemplate.send(topicName, key, payload);
             future.addCallback(new ListenableFutureCallback<>() {
                 @Override

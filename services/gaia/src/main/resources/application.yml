@@ -1,0 +1,58 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: gaia
+  kafka:
+    bootstrapServers: localhost:9092
+  datasource:
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:3306/gaia
+    username: root
+    password: admin12345
+  output:
+    ansi:
+      enabled: ALWAYS
+  cloud:
+    stream:
+      function:
+        definition: processAluno;joinProfessorTurmaDisciplina
+      bindings:
+        processAluno-in-0:
+          destination: TABLE_ALUNO
+          contentType: application/json
+        joinProfessorTurmaDisciplina-in-0:
+          destination: TABLE_GRADE_DISCIPLINA
+          contentType: application/json
+        joinProfessorTurmaDisciplina-in-1:
+          destination: TABLE_TURMA_DISCIPLINA
+          contentType: application/json
+        joinProfessorTurmaDisciplina-out-0:
+          destination: GRADE_TURMA_DISCIPLINA_MATCH
+          contentType: application/json
+      kafka:
+        streams:
+          bindings:
+            input:
+              nativeDecoding: true
+            output:
+              nativeEncoding: true
+          binder:
+            functions:
+              processAluno:
+                applicationId: aluno-processor
+              joinProfessorTurmaDisciplina:
+                applicationId: join-processor
+            configuration:
+              spring.json.trusted.packages: "*"
+              spring.json.remove.type.headers: false
+              spring.json.add.type.headers: true
+              spring.json.use.type.headers: true
+              default:
+                key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value.serde: org.springframework.kafka.support.serializer.JsonSerde
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
