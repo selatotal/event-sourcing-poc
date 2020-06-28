@@ -2,14 +2,11 @@ package br.com.grupoa.avaliaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.Aluno;
 import br.com.grupoa.academic.model.event.Event;
-import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.avaliaservice.model.AlunoEntity;
 import br.com.grupoa.avaliaservice.repository.AlunoRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static java.lang.String.format;
 
 public class ProcessAlunoEvent implements ProcessEvent<AlunoEntity> {
 
@@ -37,15 +34,16 @@ public class ProcessAlunoEvent implements ProcessEvent<AlunoEntity> {
     @Override
     public void processEvent(Event event) {
         AlunoEntity entity = convertToEntity(event);
+        String payload = gson.toJson(entity);
         switch (event.getType()){
             case CREATE:
             case UPDATE:
                 repository.save(entity);
-                logger.info("Aluno Saved: {}", gson.toJson(entity));
+                logger.info("Aluno Saved: {}", payload);
                 break;
             case DELETE:
                 repository.deleteById(entity.getCodigo());
-                logger.info("Aluno Removed: {}", gson.toJson(entity));
+                logger.info("Aluno Removed: {}", payload);
                 break;
             default:
                 logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());

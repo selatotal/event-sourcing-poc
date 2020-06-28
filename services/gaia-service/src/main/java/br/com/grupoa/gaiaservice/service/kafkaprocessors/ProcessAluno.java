@@ -44,7 +44,8 @@ public class ProcessAluno {
             logger.info("Aluno Removed: {}", key);
         } else {
             repository.save(convertToEntity(aluno));
-            logger.info("Aluno Saved: {}", gson.toJson(aluno));
+            String payload = gson.toJson(aluno);
+            logger.info("Aluno Saved: {}", payload);
         }
     }
 }

@@ -48,7 +48,8 @@ public class ProcessTurmaDisciplina {
             logger.info("TurmaDisciplina Removed: {}", key);
         } else {
             repository.save(convertToEntity(turmaDisciplina));
-            logger.info("TurmaDisciplina Saved: {}", gson.toJson(turmaDisciplina));
+            String payload = gson.toJson(turmaDisciplina);
+            logger.info("TurmaDisciplina Saved: {}", payload);
         }
     }
 }

@@ -1,8 +1,6 @@
 package br.com.grupoa.gaiaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.MatriculaAluno;
-import br.com.grupoa.academic.model.event.Event;
-import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.gaiaservice.repository.MatriculaAlunoRepository;
 import br.com.grupoa.gaiaservice.model.MatriculaAlunoEntity;
 import com.google.gson.Gson;
@@ -14,7 +12,6 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static java.lang.String.format;
 import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
@@ -50,7 +47,8 @@ public class ProcessMatriculaAlunoEvent {
             logger.info("MatriculaAluno Removed {}", key);
         } else {
             repository.save(convertToEntity(matriculaAluno));
-            logger.info("MatriculaAluno Saved: {}", gson.toJson(matriculaAluno));
+            String payload = gson.toJson(matriculaAluno);
+            logger.info("MatriculaAluno Saved: {}", payload);
         }
     }
 }

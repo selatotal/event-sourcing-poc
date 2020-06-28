@@ -25,6 +25,7 @@ import static java.lang.String.format;
 public class KafkaListenerService {
     
     private static final Logger logger = LoggerFactory.getLogger(KafkaListenerService.class);
+    private final Gson gson = new Gson();
     private Map<EventEntity, ProcessEvent> processEventMap;
 
     @Autowired
@@ -46,7 +47,8 @@ public class KafkaListenerService {
     @KafkaListener(topics = "#{'${kafka.listenEventTopics}'.split(',')}")
     @Transactional
     public void listenEventTopic(Event event, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key){
-        logger.info(format("Message received: [%s] %s", key, new Gson().toJson(event)));
+        String payload = gson.toJson(event);
+        logger.info("Message received: [{}] {}", key, payload);
         ProcessEvent processEvent = Optional.ofNullable(processEventMap.get(event.getEntity())).orElseThrow(() -> new ServiceValidationException(format("Invalid Event Entity: %s", event.getEntity())));
         processEvent.processEvent(event);
     }

@@ -2,14 +2,11 @@ package br.com.grupoa.avaliaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.MatriculaAluno;
 import br.com.grupoa.academic.model.event.Event;
-import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.avaliaservice.model.MatriculaAlunoEntity;
 import br.com.grupoa.avaliaservice.repository.MatriculaAlunoRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static java.lang.String.format;
 
 public class ProcessMatriculaAlunoEvent implements ProcessEvent<MatriculaAlunoEntity> {
 
@@ -40,15 +37,16 @@ public class ProcessMatriculaAlunoEvent implements ProcessEvent<MatriculaAlunoEn
     @Override
     public void processEvent(Event event) {
         MatriculaAlunoEntity entity = convertToEntity(event);
+        String payload = gson.toJson(entity);
         switch (event.getType()){
             case CREATE:
             case UPDATE:
                 repository.save(entity);
-                logger.info("MatriculaAluno Saved: " + gson.toJson(entity));
+                logger.info("MatriculaAluno Saved: {}", payload);
                 break;
             case DELETE:
                 repository.deleteById(entity.getIdMatricula());
-                logger.info("MatriculaAluno Removed: " + gson.toJson(entity));
+                logger.info("MatriculaAluno Removed: {}", payload);
                 break;
             default:
                 logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());

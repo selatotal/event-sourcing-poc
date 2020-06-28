@@ -2,14 +2,11 @@ package br.com.grupoa.avaliaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.TurmaDisciplina;
 import br.com.grupoa.academic.model.event.Event;
-import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.avaliaservice.model.TurmaDisciplinaEntity;
 import br.com.grupoa.avaliaservice.repository.TurmaDisciplinaRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static java.lang.String.format;
 
 public class ProcessTurmaDisciplinaEvent implements ProcessEvent<TurmaDisciplinaEntity> {
 
@@ -40,15 +37,16 @@ public class ProcessTurmaDisciplinaEvent implements ProcessEvent<TurmaDisciplina
     @Override
     public void processEvent(Event event) {
         TurmaDisciplinaEntity entity = convertToEntity(event);
+        String payload = gson.toJson(entity);
         switch (event.getType()){
             case CREATE:
             case UPDATE:
                 repository.save(entity);
-                logger.info("TurmaDisciplina Saved: " + gson.toJson(entity));
+                logger.info("TurmaDisciplina Saved: {}", payload);
                 break;
             case DELETE:
                 repository.deleteById(entity.getCodigo());
-                logger.info("TurmaDisciplina Removed: " + gson.toJson(entity));
+                logger.info("TurmaDisciplina Removed: {}", payload);
                 break;
             default:
                 logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());

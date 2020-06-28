@@ -2,14 +2,11 @@ package br.com.grupoa.avaliaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.GradeDisciplina;
 import br.com.grupoa.academic.model.event.Event;
-import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.avaliaservice.model.GradeDisciplinaEntity;
 import br.com.grupoa.avaliaservice.repository.GradeDisciplinaRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static java.lang.String.format;
 
 public class ProcessGradeDisciplinaEvent implements ProcessEvent<GradeDisciplinaEntity> {
 
@@ -42,15 +39,16 @@ public class ProcessGradeDisciplinaEvent implements ProcessEvent<GradeDisciplina
     @Override
     public void processEvent(Event event) {
         GradeDisciplinaEntity entity = convertToEntity(event);
+        String payload = gson.toJson(entity);
         switch (event.getType()){
             case CREATE:
             case UPDATE:
                 repository.save(entity);
-                logger.info("GradeDisciplina Saved: {}", gson.toJson(entity));
+                logger.info("GradeDisciplina Saved: {}", payload);
                 break;
             case DELETE:
                 repository.deleteById(entity.getCodigoGradeDisciplina());
-                logger.info("GradeDisciplina Removed: {}", gson.toJson(entity));
+                logger.info("GradeDisciplina Removed: {}", payload);
                 break;
             default:
                 logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());
