@@ -57,7 +57,7 @@ public class AlunoService {
     public void delete(String id) {
         Aluno entity = alunoRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
         alunoRepository.delete(entity);
-        kafkaService.publishEvent(EventType.DELETE, EventEntity.ALUNO, id, null);
+        kafkaService.publishEvent(EventType.DELETE, EventEntity.ALUNO, id, new Aluno(id));
     }
 
 }

@@ -53,7 +53,7 @@ public class TurmaDisciplinaService {
     public void delete(String id) {
         TurmaDisciplina entity = turmaDisciplinaRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
         turmaDisciplinaRepository.delete(entity);
-        kafkaService.publishEvent(EventType.DELETE, EventEntity.TURMA_DISCIPLINA, id, null);
+        kafkaService.publishEvent(EventType.DELETE, EventEntity.TURMA_DISCIPLINA, id, new TurmaDisciplina(id));
     }
 
 }

@@ -20,6 +20,10 @@ public class Professor implements AcademicEntity{
         this.email = email;
     }
 
+    public Professor(String id) {
+        this.codigo = id;
+    }
+
     public String getCodigo() {
         return codigo;
     }

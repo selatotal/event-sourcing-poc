@@ -29,6 +29,10 @@ public class TurmaDisciplina implements AcademicEntity{
         this.professores = professores;
     }
 
+    public TurmaDisciplina(String id) {
+        this.codigo = id;
+    }
+
     public String getCodigo() {
         return codigo;
     }

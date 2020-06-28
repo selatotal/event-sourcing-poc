@@ -36,10 +36,6 @@ public class ProcessMatriculaProfessorEvent implements ProcessEvent<MatriculaPro
     @Override
     public void processEvent(Event event) {
         MatriculaProfessorEntity entity = convertToEntity(event);
-        if (entity == null && !EventType.DELETE.equals(event.getType())){
-            logger.error(format("Empty MatriculaProfessor in event: %s", gson.toJson(event)));
-            return;
-        }
         switch (event.getType()){
             case CREATE:
             case UPDATE:
@@ -47,7 +43,7 @@ public class ProcessMatriculaProfessorEvent implements ProcessEvent<MatriculaPro
                 logger.info("MatriculaProfessor Saved: " + gson.toJson(entity));
                 break;
             case DELETE:
-                repository.delete(entity);
+                repository.deleteById(entity.getIdMatricula());
                 logger.info("MatriculaProfessor Removed: " + gson.toJson(entity));
                 break;
             default:

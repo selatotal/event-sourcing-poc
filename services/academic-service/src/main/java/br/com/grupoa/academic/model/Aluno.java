@@ -22,6 +22,10 @@ public class Aluno implements AcademicEntity {
         this.ra = ra;
     }
 
+    public Aluno(String id) {
+        this.codigo = id;
+    }
+
     public String getCodigo() {
         return codigo;
     }

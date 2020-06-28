@@ -36,10 +36,6 @@ public class ProcessProfessorEvent implements ProcessEvent<ProfessorEntity> {
     @Override
     public void processEvent(Event event) {
         ProfessorEntity entity = convertToEntity(event);
-        if (entity == null && !EventType.DELETE.equals(event.getType())){
-            logger.error(format("Empty Professor in event: %s", gson.toJson(event)));
-            return;
-        }
         switch (event.getType()){
             case CREATE:
             case UPDATE:
@@ -47,8 +43,7 @@ public class ProcessProfessorEvent implements ProcessEvent<ProfessorEntity> {
                 logger.info("Professor Saved: " + gson.toJson(entity));
                 break;
             case DELETE:
-                repository.delete(entity);
-                logger.info("Professor Removed: " + gson.toJson(entity));
+                repository.deleteById(entity.getCodigo());
                 break;
             default:
                 logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));

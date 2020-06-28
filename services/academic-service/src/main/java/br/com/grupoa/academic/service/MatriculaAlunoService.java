@@ -60,7 +60,7 @@ public class MatriculaAlunoService {
     public void delete(String id) {
         MatriculaAluno entity = matriculaAlunoRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
         matriculaAlunoRepository.delete(entity);
-        kafkaService.publishEvent(EventType.DELETE, EventEntity.MATRICULA_ALUNO, id, null);
+        kafkaService.publishEvent(EventType.DELETE, EventEntity.MATRICULA_ALUNO, id, new MatriculaAluno(id));
     }
 
 }

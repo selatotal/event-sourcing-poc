@@ -30,6 +30,10 @@ public class MatriculaAluno implements AcademicEntity{
         this.turmasDisciplina = turmasDisciplina;
     }
 
+    public MatriculaAluno(String id) {
+        this.idMatricula = id;
+    }
+
     public String getIdMatricula() {
         return idMatricula;
     }

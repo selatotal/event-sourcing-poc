@@ -40,10 +40,6 @@ public class ProcessTurmaDisciplinaEvent implements ProcessEvent<TurmaDisciplina
     @Override
     public void processEvent(Event event) {
         TurmaDisciplinaEntity entity = convertToEntity(event);
-        if (entity == null && !EventType.DELETE.equals(event.getType())){
-            logger.error(format("Empty TurmaDisciplina in event: %s", gson.toJson(event)));
-            return;
-        }
         switch (event.getType()){
             case CREATE:
             case UPDATE:
@@ -51,7 +47,7 @@ public class ProcessTurmaDisciplinaEvent implements ProcessEvent<TurmaDisciplina
                 logger.info("TurmaDisciplina Saved: " + gson.toJson(entity));
                 break;
             case DELETE:
-                repository.delete(entity);
+                repository.deleteById(entity.getCodigo());
                 logger.info("TurmaDisciplina Removed: " + gson.toJson(entity));
                 break;
             default:

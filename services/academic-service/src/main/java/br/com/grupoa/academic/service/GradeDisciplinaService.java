@@ -55,7 +55,7 @@ public class GradeDisciplinaService {
     public void delete(String id) {
         GradeDisciplina entity = gradeDisciplinaRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_MESSAGE));
         gradeDisciplinaRepository.delete(entity);
-        kafkaService.publishEvent(EventType.DELETE, EventEntity.GRADE_DISCIPLINA, id, null);
+        kafkaService.publishEvent(EventType.DELETE, EventEntity.GRADE_DISCIPLINA, id, new GradeDisciplina(id));
     }
 
 }

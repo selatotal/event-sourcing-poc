@@ -37,10 +37,6 @@ public class ProcessAlunoEvent implements ProcessEvent<AlunoEntity> {
     @Override
     public void processEvent(Event event) {
         AlunoEntity entity = convertToEntity(event);
-        if (entity == null && !EventType.DELETE.equals(event.getType())){
-            logger.error(format("Empty Aluno in event: %s", gson.toJson(event)));
-            return;
-        }
         switch (event.getType()){
             case CREATE:
             case UPDATE:
@@ -48,7 +44,7 @@ public class ProcessAlunoEvent implements ProcessEvent<AlunoEntity> {
                 logger.info("Aluno Saved: " + gson.toJson(entity));
                 break;
             case DELETE:
-                repository.delete(entity);
+                repository.deleteById(entity.getCodigo());
                 logger.info("Aluno Removed: " + gson.toJson(entity));
                 break;
             default:

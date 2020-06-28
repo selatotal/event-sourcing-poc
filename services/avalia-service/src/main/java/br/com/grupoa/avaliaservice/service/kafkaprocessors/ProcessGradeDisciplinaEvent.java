@@ -42,10 +42,6 @@ public class ProcessGradeDisciplinaEvent implements ProcessEvent<GradeDisciplina
     @Override
     public void processEvent(Event event) {
         GradeDisciplinaEntity entity = convertToEntity(event);
-        if (entity == null && !EventType.DELETE.equals(event.getType())){
-            logger.error(format("Empty GradeDisciplina in event: %s", gson.toJson(event)));
-            return;
-        }
         switch (event.getType()){
             case CREATE:
             case UPDATE:
@@ -53,9 +49,7 @@ public class ProcessGradeDisciplinaEvent implements ProcessEvent<GradeDisciplina
                 logger.info("GradeDisciplina Saved: " + gson.toJson(entity));
                 break;
             case DELETE:
-                repository.delete(entity);
-                logger.info("GradeDisciplina Removed: " + gson.toJson(entity));
-                break;
+                repository.deleteById(entity.getCodigoGradeDisciplina());
             default:
                 logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
         }

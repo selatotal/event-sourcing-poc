@@ -32,6 +32,10 @@ public class GradeDisciplina implements AcademicEntity{
         this.nomeCurso = nomeCurso;
     }
 
+    public GradeDisciplina(String id) {
+        this.codigoGradeDisciplina = id;
+    }
+
     public String getCodigoGradeDisciplina() {
         return codigoGradeDisciplina;
     }

@@ -40,10 +40,6 @@ public class ProcessMatriculaAlunoEvent implements ProcessEvent<MatriculaAlunoEn
     @Override
     public void processEvent(Event event) {
         MatriculaAlunoEntity entity = convertToEntity(event);
-        if (entity == null && !EventType.DELETE.equals(event.getType())){
-            logger.error(format("Empty MatriculaAluno in event: %s", gson.toJson(event)));
-            return;
-        }
         switch (event.getType()){
             case CREATE:
             case UPDATE:
@@ -51,7 +47,7 @@ public class ProcessMatriculaAlunoEvent implements ProcessEvent<MatriculaAlunoEn
                 logger.info("MatriculaAluno Saved: " + gson.toJson(entity));
                 break;
             case DELETE:
-                repository.delete(entity);
+                repository.deleteById(entity.getIdMatricula());
                 logger.info("MatriculaAluno Removed: " + gson.toJson(entity));
                 break;
             default:
