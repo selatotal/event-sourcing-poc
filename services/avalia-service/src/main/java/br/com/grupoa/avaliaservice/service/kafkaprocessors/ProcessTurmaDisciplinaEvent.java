@@ -51,7 +51,7 @@ public class ProcessTurmaDisciplinaEvent implements ProcessEvent<TurmaDisciplina
                 logger.info("TurmaDisciplina Removed: " + gson.toJson(entity));
                 break;
             default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
+                logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());
         }
 
     }

@@ -49,4 +49,10 @@ public class MatriculaProfessor implements AcademicEntity{
     public void setTurmasDisciplina(Set<String> turmasDisciplina) {
         this.turmasDisciplina = turmasDisciplina;
     }
+
+    @Override
+    public void defineEmptyId() {
+        this.idMatricula = "";
+    }
+
 }

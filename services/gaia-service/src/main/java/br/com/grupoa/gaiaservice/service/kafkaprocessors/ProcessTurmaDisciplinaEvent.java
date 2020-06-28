@@ -14,6 +14,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.String.format;
+import static org.springframework.util.StringUtils.isEmpty;
 
 public class ProcessTurmaDisciplinaEvent {
 
@@ -42,7 +43,7 @@ public class ProcessTurmaDisciplinaEvent {
     @KafkaListener(topics = "TABLE_TURMA_DISCIPLINA")
     @Transactional
     public void processEvent(TurmaDisciplina turmaDisciplina, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        if (turmaDisciplina == null){
+        if (isEmpty(turmaDisciplina.getCodigo())){
             repository.deleteById(key);
             logger.info("TurmaDisciplina Removed: {}", key);
         } else {

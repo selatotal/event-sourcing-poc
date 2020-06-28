@@ -57,4 +57,9 @@ public class Aluno implements AcademicEntity {
     public void setRa(String ra) {
         this.ra = ra;
     }
+
+    @Override
+    public void defineEmptyId() {
+        this.codigo = "";
+    }
 }

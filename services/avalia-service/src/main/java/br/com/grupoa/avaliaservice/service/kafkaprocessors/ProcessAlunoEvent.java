@@ -41,14 +41,14 @@ public class ProcessAlunoEvent implements ProcessEvent<AlunoEntity> {
             case CREATE:
             case UPDATE:
                 repository.save(entity);
-                logger.info("Aluno Saved: " + gson.toJson(entity));
+                logger.info("Aluno Saved: {}", gson.toJson(entity));
                 break;
             case DELETE:
                 repository.deleteById(entity.getCodigo());
-                logger.info("Aluno Removed: " + gson.toJson(entity));
+                logger.info("Aluno Removed: {}", gson.toJson(entity));
                 break;
             default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
+                logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());
         }
 
     }

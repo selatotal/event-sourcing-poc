@@ -12,6 +12,8 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.util.StringUtils.isEmpty;
+
 @Component
 public class ProcessAluno {
 
@@ -37,7 +39,7 @@ public class ProcessAluno {
     @KafkaListener(topics = "TABLE_ALUNO")
     @Transactional
     public void processEvent(Aluno aluno, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        if (aluno == null) {
+        if (isEmpty(aluno.getCodigo())) {
             repository.deleteById(key);
             logger.info("Aluno Removed: {}", key);
         } else {

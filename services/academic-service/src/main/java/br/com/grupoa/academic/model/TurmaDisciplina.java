@@ -88,4 +88,10 @@ public class TurmaDisciplina implements AcademicEntity{
     public void setProfessores(Set<String> professores) {
         this.professores = professores;
     }
+
+    @Override
+    public void defineEmptyId() {
+        this.codigo = "";
+    }
+
 }

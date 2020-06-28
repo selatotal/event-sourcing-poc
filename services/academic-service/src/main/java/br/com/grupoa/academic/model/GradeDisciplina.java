@@ -107,4 +107,9 @@ public class GradeDisciplina implements AcademicEntity{
     public void setNomeCurso(String nomeCurso) {
         this.nomeCurso = nomeCurso;
     }
+
+    @Override
+    public void defineEmptyId() {
+        this.codigoGradeDisciplina = "";
+    }
 }

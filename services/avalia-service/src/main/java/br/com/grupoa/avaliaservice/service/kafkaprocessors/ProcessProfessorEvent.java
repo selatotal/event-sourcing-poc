@@ -40,13 +40,14 @@ public class ProcessProfessorEvent implements ProcessEvent<ProfessorEntity> {
             case CREATE:
             case UPDATE:
                 repository.save(entity);
-                logger.info("Professor Saved: " + gson.toJson(entity));
+                logger.info("Professor Saved: {}", gson.toJson(entity));
                 break;
             case DELETE:
                 repository.deleteById(entity.getCodigo());
+                logger.info("Professor Removed: {}", gson.toJson(entity));
                 break;
             default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
+                logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());
         }
 
     }

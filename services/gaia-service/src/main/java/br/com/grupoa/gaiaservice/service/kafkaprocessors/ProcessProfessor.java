@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.String.format;
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
 public class ProcessProfessor {
@@ -38,12 +39,13 @@ public class ProcessProfessor {
     @KafkaListener(topics = "TABLE_PROFESSOR")
     @Transactional
     public void processEvent(Professor professor, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        if (professor == null){
+        if (isEmpty(professor.getCodigo())){
             repository.deleteById(key);
             logger.info("Professor Removed: {}", key);
         } else {
             repository.save(convertToEntity(professor));
-            logger.info("Professor Saved: {}" + gson.toJson(professor));
+            String strProfessor = gson.toJson(professor);
+            logger.info("Professor Saved: {}", strProfessor);
         }
     }
 }

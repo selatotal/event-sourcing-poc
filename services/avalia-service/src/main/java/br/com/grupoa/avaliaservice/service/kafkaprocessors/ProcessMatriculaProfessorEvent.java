@@ -47,7 +47,7 @@ public class ProcessMatriculaProfessorEvent implements ProcessEvent<MatriculaPro
                 logger.info("MatriculaProfessor Removed: " + gson.toJson(entity));
                 break;
             default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
+                logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());
         }
 
     }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.String.format;
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
 public class ProcessMatriculaAlunoEvent {
@@ -44,12 +45,12 @@ public class ProcessMatriculaAlunoEvent {
     @KafkaListener(topics = "TABLE_MATRICULA_ALUNO")
     @Transactional
     public void processEvent(MatriculaAluno matriculaAluno, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        if (matriculaAluno == null){
+        if (isEmpty(matriculaAluno.getIdMatricula())){
             repository.deleteById(key);
             logger.info("MatriculaAluno Removed {}", key);
         } else {
             repository.save(convertToEntity(matriculaAluno));
-            logger.info("MatriculaAluno Saved: {}" + gson.toJson(matriculaAluno));
+            logger.info("MatriculaAluno Saved: {}", gson.toJson(matriculaAluno));
         }
     }
 }

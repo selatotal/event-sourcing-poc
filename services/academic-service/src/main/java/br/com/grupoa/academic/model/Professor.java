@@ -48,4 +48,9 @@ public class Professor implements AcademicEntity{
         this.email = email;
     }
 
+    @Override
+    public void defineEmptyId() {
+        this.codigo = "";
+    }
+
 }

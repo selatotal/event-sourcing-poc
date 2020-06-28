@@ -51,7 +51,7 @@ public class ProcessMatriculaAlunoEvent implements ProcessEvent<MatriculaAlunoEn
                 logger.info("MatriculaAluno Removed: " + gson.toJson(entity));
                 break;
             default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
+                logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());
         }
 
     }

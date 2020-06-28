@@ -46,12 +46,14 @@ public class ProcessGradeDisciplinaEvent implements ProcessEvent<GradeDisciplina
             case CREATE:
             case UPDATE:
                 repository.save(entity);
-                logger.info("GradeDisciplina Saved: " + gson.toJson(entity));
+                logger.info("GradeDisciplina Saved: {}", gson.toJson(entity));
                 break;
             case DELETE:
                 repository.deleteById(entity.getCodigoGradeDisciplina());
+                logger.info("GradeDisciplina Removed: {}", gson.toJson(entity));
+                break;
             default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
+                logger.error(INVALID_EVENT_TYPE_MESSAGE, event.getType());
         }
 
     }

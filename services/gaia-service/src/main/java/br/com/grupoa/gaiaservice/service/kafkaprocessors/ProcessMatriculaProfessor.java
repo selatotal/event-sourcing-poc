@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.String.format;
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
 public class ProcessMatriculaProfessor {
@@ -40,7 +41,7 @@ public class ProcessMatriculaProfessor {
     @KafkaListener(topics = "TABLE_MATRICULA_PROFESSOR")
     @Transactional
     public void processEvent(MatriculaProfessor matriculaProfessor, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        if (matriculaProfessor == null){
+        if (isEmpty(matriculaProfessor.getIdMatricula())){
             repository.deleteById(key);
             logger.info("MatriculaProfessor Removed: {}", key);
         } else {
