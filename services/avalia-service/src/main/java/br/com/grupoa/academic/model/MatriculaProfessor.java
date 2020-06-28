@@ -1,14 +1,10 @@
 package br.com.grupoa.academic.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Set;
 
-@RedisHash("matriculaProfessor")
-public class MatriculaProfessor implements AcademicEntity{
+public class MatriculaProfessor {
 
-    @Id
     private String idMatricula;
     private String codigoProfessor;
     private Set<String> turmasDisciplina;

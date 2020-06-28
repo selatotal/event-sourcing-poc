@@ -1,15 +1,24 @@
 package br.com.grupoa.avaliaservice.service;
 
 import br.com.grupoa.avaliaservice.contract.v1.event.Event;
+import br.com.grupoa.avaliaservice.contract.v1.event.EventEntity;
+import br.com.grupoa.avaliaservice.contract.v1.exception.ServiceValidationException;
 import br.com.grupoa.avaliaservice.model.*;
+import br.com.grupoa.avaliaservice.repository.*;
+import br.com.grupoa.avaliaservice.service.kafkaprocessors.*;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -17,126 +26,30 @@ import static java.lang.String.format;
 public class KafkaListenerService {
     
     private static final Logger logger = LoggerFactory.getLogger(KafkaListenerService.class);
-    private static final String INVALID_EVENT_TYPE_MESSAGE = "Invalid Event Type: %s";
+    private Map<EventEntity, ProcessEvent> processEventMap;
 
-    private final Gson gson = new Gson();
+    @Autowired
+    public KafkaListenerService(AlunoRepository alunoRepository,
+                                GradeDisciplinaRepository gradeDisciplinaRepository,
+                                MatriculaAlunoRepository matriculaAlunoRepository,
+                                MatriculaProfessorRepository matriculaProfessorRepository,
+                                ProfessorRepository professorRepository,
+                                TurmaDisciplinaRepository turmaDisciplinaRepository) {
+        this.processEventMap = new EnumMap(EventEntity.class);
+        this.processEventMap.put(EventEntity.ALUNO, new ProcessAlunoEvent(alunoRepository));
+        this.processEventMap.put(EventEntity.GRADE_DISCIPLINA, new ProcessGradeDisciplinaEvent(gradeDisciplinaRepository));
+        this.processEventMap.put(EventEntity.MATRICULA_ALUNO, new ProcessMatriculaAlunoEvent(matriculaAlunoRepository));
+        this.processEventMap.put(EventEntity.MATRICULA_PROFESSOR, new ProcessMatriculaProfessorEvent(matriculaProfessorRepository));
+        this.processEventMap.put(EventEntity.PROFESSOR, new ProcessProfessorEvent(professorRepository));
+        this.processEventMap.put(EventEntity.TURMA_DISCIPLINA, new ProcessTurmaDisciplinaEvent(turmaDisciplinaRepository));
+    }
 
     @KafkaListener(topics = "#{'${kafka.listenEventTopics}'.split(',')}")
     @Transactional
     public void listenEventTopic(Event event, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key){
         logger.info(format("Message received: [%s] %s", key, new Gson().toJson(event)));
-        switch (event.getEntity()){
-            case ALUNO:
-                processAlunoEvent(event);
-                break;
-            case GRADE_DISCIPLINA:
-                processGradeDisciplinaEvent(event);
-                break;
-            case MATRICULA_ALUNO:
-                processMatriculaAlunoEvent(event);
-                break;
-            case MATRICULA_PROFESSOR:
-                processMatriculaProfessorEvent(event);
-                break;
-            case PROFESSOR:
-                processProfessorEvent(event);
-                break;
-            case TURMA_DISCIPLINA:
-                processTurmaDisciplinaEvent(event);
-                break;
-            default:
-                logger.error(format("Invalid Event Entity: %s", event.getEntity()));
-        }
-    }
-
-    private void processAlunoEvent(Event event) {
-        Aluno aluno = gson.fromJson(event.getPayload(), Aluno.class);
-        switch (event.getType()){
-            case CREATE:
-            case UPDATE:
-                logger.info("Aluno Saved: " + new Gson().toJson(aluno));
-                break;
-            case DELETE:
-                logger.info("Aluno Removed: " + new Gson().toJson(aluno));
-                break;
-            default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
-        }
-    }
-
-    private void processGradeDisciplinaEvent(Event event) {
-        GradeDisciplina gradeDisciplina = gson.fromJson(event.getPayload(), GradeDisciplina.class);
-        switch (event.getType()){
-            case CREATE:
-            case UPDATE:
-                logger.info("GradeDisciplina Saved: " + new Gson().toJson(gradeDisciplina));
-                break;
-            case DELETE:
-                logger.info("GradeDisciplina Removed: " + new Gson().toJson(gradeDisciplina));
-                break;
-            default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
-        }
-    }
-
-    private void processMatriculaAlunoEvent(Event event) {
-        MatriculaAluno matriculaAluno = gson.fromJson(event.getPayload(), MatriculaAluno.class);
-        switch (event.getType()){
-            case CREATE:
-            case UPDATE:
-                logger.info("MatriculaAluno Saved: " + new Gson().toJson(matriculaAluno));
-                break;
-            case DELETE:
-                logger.info("MatriculaAluno Removed: " + new Gson().toJson(matriculaAluno));
-                break;
-            default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
-        }
-    }
-
-    private void processMatriculaProfessorEvent(Event event) {
-        MatriculaProfessor matriculaProfessor = gson.fromJson(event.getPayload(), MatriculaProfessor.class);
-        switch (event.getType()){
-            case CREATE:
-            case UPDATE:
-                logger.info("MatriculaProfessor Saved: " + new Gson().toJson(matriculaProfessor));
-                break;
-            case DELETE:
-                logger.info("MatriculaProfessor Removed: " + new Gson().toJson(matriculaProfessor));
-                break;
-            default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
-        }
-    }
-
-    private void processProfessorEvent(Event event) {
-        Professor professor = gson.fromJson(event.getPayload(), Professor.class);
-        switch (event.getType()){
-            case CREATE:
-            case UPDATE:
-                logger.info("Professor Saved: " + new Gson().toJson(professor));
-                break;
-            case DELETE:
-                logger.info("Professor Removed: " + new Gson().toJson(professor));
-                break;
-            default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
-        }
-    }
-
-    private void processTurmaDisciplinaEvent(Event event) {
-        TurmaDisciplina turmaDisciplina = gson.fromJson(event.getPayload(), TurmaDisciplina.class);
-        switch (event.getType()){
-            case CREATE:
-            case UPDATE:
-                logger.info("TurmaDisciplina Saved: " + new Gson().toJson(turmaDisciplina));
-                break;
-            case DELETE:
-                logger.info("TurmaDisciplina Removed: " + new Gson().toJson(turmaDisciplina));
-                break;
-            default:
-                logger.error(format(INVALID_EVENT_TYPE_MESSAGE, event.getType()));
-        }
+        ProcessEvent processEvent = Optional.ofNullable(processEventMap.get(event.getEntity())).orElseThrow(() -> new ServiceValidationException(format("Invalid Event Entity: %s", event.getEntity())));
+        processEvent.processEvent(event);
     }
 
 }

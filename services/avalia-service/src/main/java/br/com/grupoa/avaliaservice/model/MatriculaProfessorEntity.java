@@ -1,22 +1,24 @@
-package br.com.grupoa.academic.model;
+package br.com.grupoa.avaliaservice.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Set;
 
-@RedisHash("matriculaProfessor")
-public class MatriculaProfessor implements AcademicEntity{
+@Entity(name = "matricula_professor")
+public class MatriculaProfessorEntity {
 
     @Id
     private String idMatricula;
     private String codigoProfessor;
+    @Transient
     private Set<String> turmasDisciplina;
 
-    public MatriculaProfessor() {
+    public MatriculaProfessorEntity() {
     }
 
-    public MatriculaProfessor(String idMatricula, String codigoProfessor, Set<String> turmasDisciplina) {
+    public MatriculaProfessorEntity(String idMatricula, String codigoProfessor, Set<String> turmasDisciplina) {
         this.idMatricula = idMatricula;
         this.codigoProfessor = codigoProfessor;
         this.turmasDisciplina = turmasDisciplina;

@@ -1,10 +1,11 @@
-package br.com.grupoa.academic.model;
-
-import org.springframework.data.annotation.Id;
-
+package br.com.grupoa.avaliaservice.model;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Set;
 
-public class MatriculaAluno {
+@Entity(name = "matricula_aluno")
+public class MatriculaAlunoEntity {
 
     @Id
     private String idMatricula;
@@ -13,12 +14,13 @@ public class MatriculaAluno {
     private String curso;
     private String grade;
     private String periodo;
+    @Transient
     private Set<String> turmasDisciplina;
 
-    public MatriculaAluno() {
+    public MatriculaAlunoEntity() {
     }
 
-    public MatriculaAluno(String idMatricula, String codigoAluno, String periodoLetivo, String curso, String grade, String periodo, Set<String> turmasDisciplina) {
+    public MatriculaAlunoEntity(String idMatricula, String codigoAluno, String periodoLetivo, String curso, String grade, String periodo, Set<String> turmasDisciplina) {
         this.idMatricula = idMatricula;
         this.codigoAluno = codigoAluno;
         this.periodoLetivo = periodoLetivo;

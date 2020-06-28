@@ -2,6 +2,7 @@ package br.com.grupoa.academic.config;
 
 import br.com.grupoa.academic.contract.v1.event.Event;
 import br.com.grupoa.academic.model.*;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -107,4 +108,28 @@ public class KafkaConfig {
         return new KafkaTemplate<>(producerFactoryTurmaDisciplina());
     }
 
+    @Bean
+    public NewTopic gradeDisciplinaTopic(){
+        return new NewTopic("TABLE_GRADE_DISCIPLINA", 1, (short)1);
+    }
+
+    @Bean
+    public NewTopic matriculaAlunoTopic(){
+        return new NewTopic("TABLE_MATRICULA_ALUNO", 1, (short)1);
+    }
+
+    @Bean
+    public NewTopic matriculaProfessorTopic(){
+        return new NewTopic("TABLE_MATRICULA_PROFESSOR", 1, (short)1);
+    }
+
+    @Bean
+    public NewTopic professorTopic(){
+        return new NewTopic("TABLE_PROFESSOR", 1, (short)1);
+    }
+
+    @Bean
+    public NewTopic turmaDisciplinaTopic(){
+        return new NewTopic("TABLE_TURMA_DISCIPLINA", 1, (short)1);
+    }
 }
