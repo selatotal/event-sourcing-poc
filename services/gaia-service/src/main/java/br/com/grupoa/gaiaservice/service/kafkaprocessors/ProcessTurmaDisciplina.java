@@ -12,7 +12,6 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static java.lang.String.format;
 import static org.springframework.util.StringUtils.isEmpty;
 
 @Component

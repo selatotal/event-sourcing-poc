@@ -26,7 +26,7 @@ public class KafkaListenerService {
     
     private static final Logger logger = LoggerFactory.getLogger(KafkaListenerService.class);
     private final Gson gson = new Gson();
-    private Map<EventEntity, ProcessEvent> processEventMap;
+    private final Map<EventEntity, ProcessEvent> processEventMap;
 
     @Autowired
     public KafkaListenerService(AlunoRepository alunoRepository,
