@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:3306/gaia
+    username: root
+    password: admin12345
+  output:
+    ansi:
+      enabled: ALWAYS
+
+kafka:
+  bootstrapAddress: localhost:9092
+  consumerGroupId: gaia
