@@ -1,4 +1,4 @@
-package br.com.grupoa.avaliaservice.contract.v1.event;
+package br.com.grupoa.academic.model.event;
 
 public enum EventType {
     CREATE,

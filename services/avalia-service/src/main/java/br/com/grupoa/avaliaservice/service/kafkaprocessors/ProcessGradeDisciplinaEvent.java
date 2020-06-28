@@ -1,8 +1,8 @@
 package br.com.grupoa.avaliaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.GradeDisciplina;
-import br.com.grupoa.avaliaservice.contract.v1.event.Event;
-import br.com.grupoa.avaliaservice.contract.v1.event.EventType;
+import br.com.grupoa.academic.model.event.Event;
+import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.avaliaservice.model.GradeDisciplinaEntity;
 import br.com.grupoa.avaliaservice.repository.GradeDisciplinaRepository;
 import com.google.gson.Gson;

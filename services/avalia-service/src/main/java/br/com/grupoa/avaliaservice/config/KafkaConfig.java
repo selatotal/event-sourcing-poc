@@ -1,6 +1,6 @@
 package br.com.grupoa.avaliaservice.config;
 
-import br.com.grupoa.avaliaservice.contract.v1.event.Event;
+import br.com.grupoa.academic.model.event.Event;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -12,7 +12,6 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.JsonSerde;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;

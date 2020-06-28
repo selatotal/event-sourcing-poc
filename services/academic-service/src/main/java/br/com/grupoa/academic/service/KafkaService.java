@@ -1,8 +1,8 @@
 package br.com.grupoa.academic.service;
 
-import br.com.grupoa.academic.contract.v1.event.Event;
-import br.com.grupoa.academic.contract.v1.event.EventEntity;
-import br.com.grupoa.academic.contract.v1.event.EventType;
+import br.com.grupoa.academic.model.event.Event;
+import br.com.grupoa.academic.model.event.EventEntity;
+import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.academic.contract.v1.exception.InternalErrorException;
 import br.com.grupoa.academic.contract.v1.exception.ServiceValidationException;
 import br.com.grupoa.academic.model.*;
@@ -23,6 +23,8 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import static java.lang.String.format;
 
 @Service
 public class KafkaService {
@@ -70,7 +72,7 @@ public class KafkaService {
         }
 
         public synchronized void publishEvent(String topicName, String key, T payload) {
-            logger.info("Sending message to topic: " + topicName);
+            logger.info(format("Sending message to topic: %s", topicName));
             ListenableFuture<SendResult<String, T>> future = kafkaTemplate.send(topicName, key, payload);
             future.addCallback(new ListenableFutureCallback<>() {
                 @Override

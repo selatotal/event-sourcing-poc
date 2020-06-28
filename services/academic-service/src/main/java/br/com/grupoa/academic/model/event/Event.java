@@ -1,4 +1,4 @@
-package br.com.grupoa.academic.contract.v1.event;
+package br.com.grupoa.academic.model.event;
 
 public class Event {
     private EventType type;

@@ -1,7 +1,7 @@
 package br.com.grupoa.academic.service;
 
-import br.com.grupoa.academic.contract.v1.event.EventEntity;
-import br.com.grupoa.academic.contract.v1.event.EventType;
+import br.com.grupoa.academic.model.event.EventEntity;
+import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.academic.contract.v1.exception.NotFoundException;
 import br.com.grupoa.academic.repository.GradeDisciplinaRepository;
 import br.com.grupoa.academic.model.GradeDisciplina;

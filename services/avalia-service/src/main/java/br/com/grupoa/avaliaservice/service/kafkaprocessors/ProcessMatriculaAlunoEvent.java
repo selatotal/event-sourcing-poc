@@ -1,18 +1,13 @@
 package br.com.grupoa.avaliaservice.service.kafkaprocessors;
 
-import br.com.grupoa.academic.model.Aluno;
 import br.com.grupoa.academic.model.MatriculaAluno;
-import br.com.grupoa.avaliaservice.contract.v1.event.Event;
-import br.com.grupoa.avaliaservice.contract.v1.event.EventType;
+import br.com.grupoa.academic.model.event.Event;
+import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.avaliaservice.model.MatriculaAlunoEntity;
-import br.com.grupoa.avaliaservice.repository.AlunoRepository;
 import br.com.grupoa.avaliaservice.repository.MatriculaAlunoRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collections;
-import java.util.Optional;
 
 import static java.lang.String.format;
 

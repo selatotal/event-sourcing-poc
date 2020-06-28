@@ -1,9 +1,8 @@
 package br.com.grupoa.avaliaservice.service;
 
-import br.com.grupoa.avaliaservice.contract.v1.event.Event;
-import br.com.grupoa.avaliaservice.contract.v1.event.EventEntity;
+import br.com.grupoa.academic.model.event.Event;
+import br.com.grupoa.academic.model.event.EventEntity;
 import br.com.grupoa.avaliaservice.contract.v1.exception.ServiceValidationException;
-import br.com.grupoa.avaliaservice.model.*;
 import br.com.grupoa.avaliaservice.repository.*;
 import br.com.grupoa.avaliaservice.service.kafkaprocessors.*;
 import com.google.gson.Gson;

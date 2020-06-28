@@ -1,6 +1,6 @@
 package br.com.grupoa.academic.config;
 
-import br.com.grupoa.academic.contract.v1.event.Event;
+import br.com.grupoa.academic.model.event.Event;
 import br.com.grupoa.academic.model.*;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;

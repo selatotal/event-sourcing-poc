@@ -1,8 +1,8 @@
 package br.com.grupoa.avaliaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.TurmaDisciplina;
-import br.com.grupoa.avaliaservice.contract.v1.event.Event;
-import br.com.grupoa.avaliaservice.contract.v1.event.EventType;
+import br.com.grupoa.academic.model.event.Event;
+import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.avaliaservice.model.TurmaDisciplinaEntity;
 import br.com.grupoa.avaliaservice.repository.TurmaDisciplinaRepository;
 import com.google.gson.Gson;
