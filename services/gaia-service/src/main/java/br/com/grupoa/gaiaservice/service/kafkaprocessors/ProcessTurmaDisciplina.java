@@ -1,8 +1,6 @@
 package br.com.grupoa.gaiaservice.service.kafkaprocessors;
 
 import br.com.grupoa.academic.model.TurmaDisciplina;
-import br.com.grupoa.academic.model.event.Event;
-import br.com.grupoa.academic.model.event.EventType;
 import br.com.grupoa.gaiaservice.repository.TurmaDisciplinaRepository;
 import br.com.grupoa.gaiaservice.model.TurmaDisciplinaEntity;
 import com.google.gson.Gson;
@@ -11,18 +9,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.String.format;
 import static org.springframework.util.StringUtils.isEmpty;
 
-public class ProcessTurmaDisciplinaEvent {
+@Component
+public class ProcessTurmaDisciplina {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProcessTurmaDisciplinaEvent.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessTurmaDisciplina.class);
     private final Gson gson = new Gson();
     private final TurmaDisciplinaRepository repository;
 
-    public ProcessTurmaDisciplinaEvent(TurmaDisciplinaRepository repository) {
+    public ProcessTurmaDisciplina(TurmaDisciplinaRepository repository) {
         this.repository = repository;
     }
 
@@ -48,7 +48,7 @@ public class ProcessTurmaDisciplinaEvent {
             logger.info("TurmaDisciplina Removed: {}", key);
         } else {
             repository.save(convertToEntity(turmaDisciplina));
-            logger.info("TurmaDisciplina Saved: {}" + gson.toJson(turmaDisciplina));
+            logger.info("TurmaDisciplina Saved: {}", gson.toJson(turmaDisciplina));
         }
     }
 }
