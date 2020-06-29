@@ -2,15 +2,14 @@
 Event Sourcing POC
 
 This project aims to explain how to use event-sourcing to synchronize data between 3 services.
-The problem is an education company, that needs to use 3 services: 1 for professors, 1 for Students and other for classrooms.
-- professor-service 
-- Student-service
-- classroom-service
+- academic-service: the service that owns the data and publish events in event-sourcing and event-carried-state-tranfer ways 
+- avalia-service: the service that uses event-sourcing to syncronize application
+- classroom-service: the service that uses event-carried-state-transfer to syncronize application
 
 ## Infrastructure Services
 The project has an "infra" directory containing a docker-compose.yml file.
 
-This docker-compose will start Kafka (with Zookeper) and mysql8 server.
+This docker-compose will start Kafka (with Zookeper), Redis and MySQL8 server.
 
 To start servers, you should use:
 ```bash
@@ -22,14 +21,15 @@ To stop servers, you should use:
 docker-compose down
 ``` 
 
+IMPORTANT: The MySQL and Redis data are persisted. The kafka topics doesn't. You can change the docker-compose to persist Kafka data too
+
 ### MySQL Schema creation
 After start servers, you need to create the schemas needed by the services.
 
 To do that, you should connect in mysql using root/admin12345 credentials and execute the following commands:
 ```mysql
-create schema professor;
-create schema student;
-create schema classroom;
+create schema avalia;
+create schema gaia;
 ```
 
 ## Execute Services
@@ -37,13 +37,11 @@ To execute services, you should have Java 11 and execute the following command i
 ```bash
 gradle bootRun
 ```
-You can access a Swagger interface to test endpoints at the following URLs:
-- Professor Service: http://localhost:8081/swagger-ui.html
-- Student Service: http://localhost:8082/swagger-ui.html
-- Classroom Service: http://localhost:8083/swagger-ui.html
+You can access a Swagger interface to test CRUD in Academic service endpoint at the following URL:
+- Academic Service: http://localhost:8081/swagger-ui.html
 
 ## What you can check
-- You can create professor and students at its services. When you create, update or delete one, a message is published in kafka with the operation using the following payload (sample):
+- When you create, update or delete entities, a message is published in kafka with the operation using the following payload (sample):
 ```json
 {
   "type": "CREATE",
@@ -52,12 +50,24 @@ You can access a Swagger interface to test endpoints at the following URLs:
 }
 ```
 The message has the operation type (CREATE/UPDATE/DELETE), the entity type and the entity payload.
-- Classroom service listen the kafka topic and use the message to synchronize its own repository.
 
+We have specific topics for each entity, to test event-carried way. For the message above, we publish a message in TABLE_PROFESSOR topic, using the id as a key and the followin payload as message body:
+```json
+{
+  "id": "12314", 
+  "name": "Professor 1"
+}
+```
+The academic-service listen the first topic and the gaia-service listen each TABLE topic.
+They should update its local services databases with the operations.
 
-# TODO List
-- Como lidar com eventos duplicados
-- sequenciamento das msgs 
-- Exemplo de rewind logs. Aplicação le eventos historicos e repopula sua base. 
-- Monitoramento de msgs. Tratamento de erros. 
-- Compactação. Como evitar que dados nos topicos cresçam infinitamente.
+# To learn more
+- Book - Making Sense of Stream Processing - https://www.confluent.io/stream-processing/
+- Book - Designing Event-Driven Systems - https://www.confluent.io/designing-event-driven-systems/
+- Apache Kafka - https://kafka.apache.org
+- Redis - https://redis.io/
+- MySQL - https://www.mysql.com/
+- Spring Data Redis - https://spring.io/projects/spring-data-redis
+- Spring Data JPA - https://spring.io/projects/spring-data-jpa
+- SpringFox - https://springfox.github.io/springfox/
+- Docker Compose - https://docs.docker.com/compose/gettingstarted/
