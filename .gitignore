@@ -139,6 +139,7 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 infra/data
+infra/full-stack
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij+iml,visualstudiocode,gradle
 /.idea/codeStyles/codeStyleConfig.xml
 /.idea/compiler.xml
