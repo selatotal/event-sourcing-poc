@@ -9,7 +9,7 @@ This project aims to explain how to use event-sourcing to synchronize data betwe
 ## Infrastructure Services
 The project has an "infra" directory containing a docker-compose.yml file.
 
-This docker-compose will start Kafka (with Zookeper), Redis and MySQL8 server.
+This docker-compose will start Kafka (with Zookeper) and MySQL8 server.
 
 To start servers, you should use:
 ```bash
@@ -28,6 +28,7 @@ After start servers, you need to create the schemas needed by the services.
 
 To do that, you should connect in mysql using root/admin12345 credentials and execute the following commands:
 ```mysql
+create schema academic;
 create schema avalia;
 create schema gaia;
 ```
@@ -65,9 +66,8 @@ They should update its local services databases with the operations.
 - Book - Making Sense of Stream Processing - https://www.confluent.io/stream-processing/
 - Book - Designing Event-Driven Systems - https://www.confluent.io/designing-event-driven-systems/
 - Apache Kafka - https://kafka.apache.org
-- Redis - https://redis.io/
 - MySQL - https://www.mysql.com/
-- Spring Data Redis - https://spring.io/projects/spring-data-redis
+- FlywayDB - https://flywaydb.org/
 - Spring Data JPA - https://spring.io/projects/spring-data-jpa
 - SpringFox - https://springfox.github.io/springfox/
 - Docker Compose - https://docs.docker.com/compose/gettingstarted/

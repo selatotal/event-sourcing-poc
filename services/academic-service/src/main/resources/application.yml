@@ -5,6 +5,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  datasource:
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:3306/academic
+    username: root
+    password: admin12345
   output:
     ansi:
       enabled: ALWAYS

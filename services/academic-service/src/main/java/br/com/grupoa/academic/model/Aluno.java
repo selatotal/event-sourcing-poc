@@ -1,9 +1,9 @@
 package br.com.grupoa.academic.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@RedisHash("aluno")
+@Entity(name = "aluno")
 public class Aluno implements AcademicEntity {
 
     @Id

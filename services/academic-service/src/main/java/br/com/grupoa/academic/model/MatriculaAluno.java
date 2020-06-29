@@ -1,11 +1,11 @@
 package br.com.grupoa.academic.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Set;
 
-@RedisHash("matriculaAluno")
+@Entity(name = "matriculaAluno")
 public class MatriculaAluno implements AcademicEntity{
 
     @Id
@@ -15,6 +15,7 @@ public class MatriculaAluno implements AcademicEntity{
     private String curso;
     private String grade;
     private String periodo;
+    @Transient
     private Set<String> turmasDisciplina;
 
     public MatriculaAluno() {
